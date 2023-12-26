@@ -1,13 +1,12 @@
 ul {
   list-style-type: none;
 }
-li {
-}
 
 img {
   width: 360px;
   height: 200px;
 }
+
 .gallery {
   display: flex;
   flex-wrap: wrap;

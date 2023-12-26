@@ -63,7 +63,7 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
-
+let instance;
 const container = document.querySelector(".gallery");
 container.innerHTML = createMarkup(images);
 
@@ -74,30 +74,27 @@ function handleImageClick(event) {
   if (event.target === event.currentTarget) {
     return;
   }
-  let instance;
+
+  function handleEscBnt(event) {
+    if (event.code === "Escape" || event.code === "Esc") {
+      instance.close();
+    }
+  }
 
   instance = basicLightbox.create(
     `<div class="modal">
         <img class="modal-img"
           src= "${event.target.dataset.source}"
-          alt="${event.target.dataset.description}"
+          alt="${event.target.alt}"
         />
      </div>`,
 
     {
       onShow: () => {
-        document.addEventListener("keydown", () => {
-          if (event.code === "Escape" || event.code === "Esc") {
-            instance.close();
-          }
-        });
+        document.addEventListener("keydown", handleEscBnt);
       },
       onClose: () => {
-        document.removeEventListener("keydown", () => {
-          if (event.code === "Escape" || event.code === "Esc") {
-            instance.close();
-          }
-        });
+        document.removeEventListener("keydown", handleEscBnt);
       },
     }
   );
@@ -116,8 +113,8 @@ function createMarkup(arr) {
     src="${preview}" 
     data-source="${original}"
     alt="${description}"
-     width: 360px;
-  height: 200px;
+    width="360"
+    height="200"
     />
       </a>
   </li>
